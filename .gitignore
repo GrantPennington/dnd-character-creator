@@ -1,0 +1,12 @@
+# Root
+node_modules
+.env
+
+# Client
+client/node_modules
+client/build
+client/.env*
+
+# Server
+backend/node_modules
+backend/.env

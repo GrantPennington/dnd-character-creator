@@ -78,4 +78,30 @@ const generateImageWithOpenAI = async (character) => {
   return response.data[0].url;
 };
 
-module.exports = { generateCharacterWithOpenAI, generateImageWithOpenAI };
+const regenerateFieldWithOpenAI = async (field, character) => {
+  const { race, class: charClass, theme, alignment, role } = character;
+
+  const basePrompt = `
+You are a Dungeons & Dragons character assistant. Regenerate only the character's "${field}" field based on the following full character description:
+
+- Race: ${race}
+- Class: ${charClass}
+- Theme: ${theme}
+- Alignment: ${alignment}
+- Party Role: ${role}
+
+Current ${field}: ${character[field]}
+
+Respond ONLY with a valid replacement for the "${field}" field as plain text.
+  `.trim();
+
+  const response = await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo', //gpt-4
+    messages: [{ role: 'user', content: basePrompt }],
+    temperature: 0.8,
+  });
+
+  return response.choices[0].message.content.trim();
+};
+
+module.exports = { generateCharacterWithOpenAI, generateImageWithOpenAI, regenerateFieldWithOpenAI };

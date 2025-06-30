@@ -26,7 +26,7 @@ const CharacterViewer = ({ characterMap }) => {
             </Button>
             <Button
                 variant="outlined"
-                onClick={() => navigate(`/print/${id}`)}
+                onClick={() => navigate(`/character/${id}/edit`)}
             >
                 Edit
             </Button>

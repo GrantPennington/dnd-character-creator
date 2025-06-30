@@ -1,4 +1,4 @@
-const { generateCharacterWithOpenAI, generateImageWithOpenAI } = require('../services/openaiService');
+const { generateCharacterWithOpenAI, generateImageWithOpenAI, regenerateFieldWithOpenAI } = require('../services/openaiService');
 
 const generateCharacter = async (req, res) => {
     try {
@@ -24,4 +24,20 @@ const generateCharacter = async (req, res) => {
     }
 };
 
-module.exports = { generateCharacter };
+const regenerateField = async (req, res) => {
+    const { field, character } = req.body;
+
+    if (!field || !character) {
+        return res.status(400).json({ error: 'Field and character are required.' });
+    }
+
+    try {
+        const newValue = await regenerateFieldWithOpenAI(field, character);
+        res.json({ result: newValue });
+    } catch (error) {
+        console.error('Error regenerating field:', error);
+        res.status(500).json({ error: 'Failed to regenerate field.' });
+    }
+};
+
+module.exports = { generateCharacter, regenerateField };

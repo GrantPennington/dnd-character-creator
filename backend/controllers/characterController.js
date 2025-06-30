@@ -1,4 +1,4 @@
-const { generateCharacterWithOpenAI } = require('../services/openaiService');
+const { generateCharacterWithOpenAI, generateImageWithOpenAI } = require('../services/openaiService');
 
 const generateCharacter = async (req, res) => {
     try {
@@ -9,16 +9,18 @@ const generateCharacter = async (req, res) => {
             charClass,
             theme,
             alignment,
-            role
+            role,
         });
 
-        res.json({ result: character });
-    } catch(err) {
-        console.error('Error in generateCharacter:', err.message);
+        const portraitUrl = await generateImageWithOpenAI(character);
+
+        res.json({ result: { ...character, portraitUrl } });
+    } catch (error) {
+        console.error('Error in generateCharacter:', error.message);
         res.status(500).json({
-            error: 'Character generation failed. Please try again or tweak your inputs.',
+            error: 'Character generation failed. Please try again.',
         });
     }
-}
+};
 
-module.exports = { generateCharacter }
+module.exports = { generateCharacter };

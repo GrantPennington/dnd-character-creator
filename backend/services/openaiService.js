@@ -60,4 +60,22 @@ Respond ONLY with a valid JSON object with the following structure (no preamble 
     }
 };
 
-module.exports = { generateCharacterWithOpenAI };
+const generatePortraitPrompt = (character) => {
+  return `A fantasy portrait of a ${character.race.toLowerCase()} ${character.class.toLowerCase()} with a ${character.alignment.toLowerCase()} expression. 
+They are ${character.appearance.toLowerCase()}. Style: highly detailed, Dungeons & Dragons, fantasy art.`;
+};
+
+const generateImageWithOpenAI = async (character) => {
+  const prompt = generatePortraitPrompt(character);
+
+  const response = await openai.images.generate({
+    model: 'dall-e-2', // or 'dall-e-2' if you want faster generation
+    prompt,
+    size: '512x512',
+    response_format: 'url',
+  });
+
+  return response.data[0].url;
+};
+
+module.exports = { generateCharacterWithOpenAI, generateImageWithOpenAI };

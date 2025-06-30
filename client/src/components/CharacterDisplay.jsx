@@ -23,11 +23,11 @@ const CharacterDisplay = ({ character }) => {
         <Box mt={4}>
         <Card sx={{ maxWidth: 800, mx: 'auto', p: 2, backgroundColor: 'background.paper' }}>
             <CardContent>
-            <Box sx={{ textAlign: 'center', mt: 3 }}>
+            {/* <Box sx={{ textAlign: 'center', mt: 3 }}>
                 <Button variant="outlined" size="medium" onClick={handleExport}>
                     Export Character Sheet
                 </Button>
-            </Box>
+            </Box> */}
             {character.portraitUrl && (
                 <Box sx={{ textAlign: 'center', mb: 3 }}>
                     <img

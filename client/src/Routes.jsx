@@ -1,20 +1,16 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import CharacterForm from './components/CharacterForm';
-import CharacterDisplay from './components/CharacterDisplay';
+import CharacterViewer from './pages/CharacterViewer'; // new
+import GenerateRedirect from './pages/GenerateRedirect'; // handles in-memory ID creation
 import PrintableView from './components/PrintableView';
 
-const AppRoutes = ({ character, setCharacter }) => (
+const AppRoutes = ({ characterMap, setCharacterMap }) => (
   <Routes>
-    <Route
-      path="/"
-      element={
-        <>
-          <CharacterForm onResult={setCharacter} />
-          <CharacterDisplay character={character} />
-        </>
-      }
-    />
-    <Route path="/print" element={<PrintableView />} />
+    <Route path="/" element={<Navigate to="/generate" />} />
+    <Route path="/generate" element={<CharacterForm onResult={setCharacterMap} />} />
+    <Route path="/character/:id" element={<CharacterViewer characterMap={characterMap} />} />
+    <Route path="/print/:id" element={<PrintableView characterMap={characterMap} />} />
+    {/* Later: <Route path="/my-characters" element={<UserDashboard />} /> */}
   </Routes>
 );
 

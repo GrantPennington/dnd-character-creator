@@ -9,8 +9,10 @@ import {
 } from '@mui/material';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const CharacterForm = ({ onResult }) => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         race: '',
         charClass: '',
@@ -32,7 +34,9 @@ const CharacterForm = ({ onResult }) => {
                 import.meta.env.VITE_API_BASE_URL + '/characters/generate',
                 formData
             );
-            onResult(res.data.result);
+            const generatedCharacter = res.data.result;
+            const newId = onResult(generatedCharacter);
+            navigate(`/character/${newId}`);
         } catch (err) {
             alert('Failed to generate character.');
             console.error(err);

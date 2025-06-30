@@ -32,12 +32,14 @@
 // export default PrintableView;
 
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import CharacterSheet from './CharacterSheet';
 
-const PrintableView = () => {
-    const { state } = useLocation();
-    const character = state?.character;
+const PrintableView = ({ characterMap }) => {
+    //const { state } = useLocation();
+    const { id } = useParams();
+    const character = characterMap[id];
+    //const character = state?.character;
 
     useEffect(() => {
         // Give the page time to render before triggering print

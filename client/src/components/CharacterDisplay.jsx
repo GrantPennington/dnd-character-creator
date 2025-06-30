@@ -6,15 +6,28 @@ import {
   Divider,
   Grid,
   Paper,
+  Button,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const CharacterDisplay = ({ character }) => {
+    const navigate = useNavigate();
+
+    const handleExport = () => {
+        navigate('/print', { state: { character } })
+    }
+
     if (!character) return null;
 
     return (
         <Box mt={4}>
         <Card sx={{ maxWidth: 800, mx: 'auto', p: 2, backgroundColor: 'background.paper' }}>
             <CardContent>
+            <Box sx={{ textAlign: 'center', mt: 3 }}>
+                <Button variant="outlined" size="medium" onClick={handleExport}>
+                    Export Character Sheet
+                </Button>
+            </Box>
             {character.portraitUrl && (
                 <Box sx={{ textAlign: 'center', mb: 3 }}>
                     <img

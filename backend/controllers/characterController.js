@@ -15,6 +15,7 @@ const generateCharacter = async (req, res) => {
         const portraitUrl = await generateImageWithOpenAI(character);
 
         res.json({ result: { ...character, portraitUrl } });
+        //res.json({ result: { ...character, portraitUrl: '' } });
     } catch (error) {
         console.error('Error in generateCharacter:', error.message);
         res.status(500).json({
